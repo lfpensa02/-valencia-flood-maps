@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4acfe1313d14f15afc6a4a680e09e47e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_4acfe1313d14f15afc6a4a680e09e47e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_4acfe1313d14f15afc6a4a680e09e47e = L.map(
+                "map_4acfe1313d14f15afc6a4a680e09e47e",
+                {
+                    center: [39.43000076214955, -0.4200000000004505],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c6410c4ac8165fcc1f90ca877616b173 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c6410c4ac8165fcc1f90ca877616b173.addTo(map_4acfe1313d14f15afc6a4a680e09e47e);
+        
+    
+            var tile_layer_0fb7f0bfd75e3bf4942588b9aba8099e = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/tidal-turbine-480203-v4/maps/cdf15bcb9b88dd9f72ed40f9a076c4fc-8cd7eb86bc1dd48efb8f8a43cfd491d0/tiles/{z}/{x}/{y}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "GEE",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_0fb7f0bfd75e3bf4942588b9aba8099e.addTo(map_4acfe1313d14f15afc6a4a680e09e47e);
+        
+    
+            var tile_layer_c0456d42adc706792f75824e56049e4f = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/tidal-turbine-480203-v4/maps/c8d250f7aabbc49d66bf2f9b54663a88-aa26e24caa08e2c6f19a64acf38dfa14/tiles/{z}/{x}/{y}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "GEE",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c0456d42adc706792f75824e56049e4f.addTo(map_4acfe1313d14f15afc6a4a680e09e47e);
+        
+    
+            var tile_layer_495f59d8c3d010c91c61717129d002c7 = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/tidal-turbine-480203-v4/maps/f0a3ef4cd7fd14326ab73aa875d84a4a-9065ff04e8df3d490138f269e641b211/tiles/{z}/{x}/{y}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "GEE",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_495f59d8c3d010c91c61717129d002c7.addTo(map_4acfe1313d14f15afc6a4a680e09e47e);
+        
+    
+            var layer_control_59ad259b68c7291b55a2b01d22551697_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_c6410c4ac8165fcc1f90ca877616b173,
+                    "Paiporta Post-Flood Oct 30" : tile_layer_0fb7f0bfd75e3bf4942588b9aba8099e,
+                    "Paiporta Flooded Pixels" : tile_layer_c0456d42adc706792f75824e56049e4f,
+                    "Paiporta SAR Flood" : tile_layer_495f59d8c3d010c91c61717129d002c7,
+                },
+                overlays :  {
+                },
+            };
+            let layer_control_59ad259b68c7291b55a2b01d22551697 = L.control.layers(
+                layer_control_59ad259b68c7291b55a2b01d22551697_layers.base_layers,
+                layer_control_59ad259b68c7291b55a2b01d22551697_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_4acfe1313d14f15afc6a4a680e09e47e);
+
+        
+</script>
+</html>
