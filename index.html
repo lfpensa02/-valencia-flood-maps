@@ -1,359 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Valencia Flood Assessment 2024</title>
+  <title>Valencia Flood Assessment 2024 — Fernando Pensamiento</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --navy: #0a1628;
-      --deep: #0d1f3c;
-      --blue: #1a4a8a;
-      --cyan: #00c2e0;
-      --water: #0077b6;
-      --flood: #48cae4;
-      --alert: #e63946;
-      --sand: #f4e9d8;
-      --white: #f0f4f8;
-      --muted: #8ba3be;
-      --card: #0f2340;
+      --navy: #0a1628; --deep: #0d1f3c; --blue: #1a4a8a; --cyan: #00c2e0;
+      --water: #0077b6; --flood: #48cae4; --alert: #e63946;
+      --white: #f0f4f8; --muted: #8ba3be; --card: #0f2340; --border: rgba(255,255,255,0.07);
     }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--navy); color:var(--white); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    nav { position:sticky; top:0; z-index:100; background:rgba(10,22,40,0.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:0 6vw; display:flex; align-items:center; gap:2rem; height:56px; overflow-x:auto; }
+    nav a { font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.1em; color:var(--muted); text-decoration:none; text-transform:uppercase; white-space:nowrap; transition:color 0.2s; }
+    nav a:hover { color:var(--cyan); }
+    .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:var(--white); margin-right:auto; white-space:nowrap; }
 
-    body {
-      background: var(--navy);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-    }
+    .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:5rem 6vw 4rem; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,119,182,0.18) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,194,224,0.10) 0%, transparent 60%); pointer-events:none; }
+    .wave-bg { position:absolute; bottom:0; left:0; right:0; height:220px; overflow:hidden; opacity:0.12; }
+    .wave-bg svg { width:200%; animation:wave 12s linear infinite; }
+    @keyframes wave { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    .hero-tag { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.2em; color:var(--cyan); text-transform:uppercase; margin-bottom:1.5rem; opacity:0; animation:fadeUp 0.8s 0.2s forwards; }
+    .hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(3.5rem,9vw,8rem); line-height:0.95; color:var(--white); margin-bottom:0.3em; opacity:0; animation:fadeUp 0.8s 0.4s forwards; }
+    .hero h1 span { color:var(--cyan); }
+    .hero-sub { font-size:clamp(1rem,2vw,1.2rem); color:var(--muted); max-width:600px; line-height:1.7; margin-bottom:2.5rem; opacity:0; animation:fadeUp 0.8s 0.6s forwards; }
+    .hero-meta { display:flex; gap:2.5rem; flex-wrap:wrap; opacity:0; animation:fadeUp 0.8s 0.8s forwards; }
+    .meta-item { display:flex; flex-direction:column; gap:0.2rem; }
+    .meta-label { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; color:var(--cyan); text-transform:uppercase; }
+    .meta-value { font-size:0.9rem; color:var(--white); font-weight:500; }
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 4rem 6vw;
-      position: relative;
-      overflow: hidden;
-    }
+    section { padding:4rem 6vw; }
+    section + section { border-top:1px solid var(--border); }
+    .section-header { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:2rem; }
+    .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,4vw,2.8rem); letter-spacing:0.04em; }
+    .section-line { flex:1; height:1px; background:var(--border); }
+    .section-tag { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; color:var(--cyan); text-transform:uppercase; margin-bottom:0.8rem; }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,119,182,0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,194,224,0.10) 0%, transparent 60%);
-      pointer-events: none;
-    }
+    .alert-banner { background:rgba(230,57,70,0.1); border-left:3px solid var(--alert); margin:0 6vw 0; padding:1.3rem 1.5rem; border-radius:0 6px 6px 0; display:flex; gap:1rem; align-items:flex-start; }
+    .alert-icon { font-size:1.2rem; flex-shrink:0; }
+    .alert-text { font-size:0.88rem; line-height:1.7; color:#f0b0b4; }
+    .alert-text strong { color:var(--alert); }
 
-    .wave-bg {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 220px;
-      overflow: hidden;
-      opacity: 0.13;
-    }
+    .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--border); border-radius:10px; overflow:hidden; }
+    .stat { background:var(--card); padding:1.8rem 1.5rem; text-align:center; transition:background 0.2s; }
+    .stat:hover { background:var(--blue); }
+    .stat-num { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:var(--cyan); line-height:1; }
+    .stat-label { font-size:0.75rem; color:var(--muted); margin-top:0.4rem; line-height:1.4; }
 
-    .wave-bg svg { width: 200%; animation: wave 12s linear infinite; }
-    @keyframes wave {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+    .prose { max-width:780px; line-height:1.85; font-size:0.95rem; color:#c8d8e8; }
+    .prose p { margin-bottom:1.2rem; }
+    .prose p:last-child { margin-bottom:0; }
+    .prose strong { color:var(--white); font-weight:500; }
 
-    .hero-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      color: var(--cyan);
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s forwards;
-    }
+    .rq-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+    .rq-card { background:var(--card); border-radius:10px; padding:1.5rem; border:1px solid var(--border); }
+    .rq-num { font-family:'Bebas Neue',sans-serif; font-size:3rem; color:rgba(0,194,224,0.2); line-height:1; margin-bottom:0.5rem; }
+    .rq-text { font-size:0.88rem; line-height:1.6; color:#c8d8e8; }
 
-    .hero h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 9vw, 8rem);
-      line-height: 0.95;
-      letter-spacing: 0.02em;
-      color: var(--white);
-      margin-bottom: 0.3em;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.4s forwards;
-    }
+    .maps-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.2rem; }
+    .map-card { background:var(--card); border-radius:12px; overflow:hidden; border:1px solid var(--border); transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s; cursor:pointer; text-decoration:none; display:block; }
+    .map-card:hover { transform:translateY(-4px); border-color:var(--cyan); box-shadow:0 12px 40px rgba(0,194,224,0.15); }
+    .map-card-header { padding:1.3rem 1.5rem 0.8rem; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:0.8rem; }
+    .map-icon { width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .map-card-title { font-weight:500; font-size:0.92rem; color:var(--white); line-height:1.3; margin-bottom:0.2rem; }
+    .map-card-tag { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--cyan); text-transform:uppercase; }
+    .map-card-body { padding:0.9rem 1.5rem 1.3rem; }
+    .map-card-desc { font-size:0.82rem; color:var(--muted); line-height:1.6; margin-bottom:0.8rem; }
+    .map-card-btn { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; font-weight:500; color:var(--cyan); font-family:'DM Mono',monospace; letter-spacing:0.05em; }
+    .map-card-btn::after { content:'→'; transition:transform 0.2s; }
+    .map-card:hover .map-card-btn::after { transform:translateX(4px); }
+    .map-card-featured { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; }
+    @media(max-width:650px){.map-card-featured{grid-template-columns:1fr;}}
+    .map-card-featured .map-card-header { flex-direction:column; padding:2rem; border-bottom:none; border-right:1px solid var(--border); justify-content:center; }
+    .map-card-featured .map-card-title { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.04em; }
+    .map-card-featured .map-card-body { padding:2rem; display:flex; flex-direction:column; justify-content:center; }
 
-    .hero h1 span { color: var(--cyan); }
+    .nb-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
+    .nb-card { background:var(--card); border-radius:10px; padding:1.4rem; border:1px solid var(--border); text-decoration:none; display:block; transition:transform 0.2s,border-color 0.2s; }
+    .nb-card:hover { transform:translateY(-3px); border-color:var(--cyan); }
+    .nb-name { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.04em; color:var(--white); margin-bottom:0.3rem; }
+    .nb-stat { font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--cyan); margin-bottom:0.6rem; letter-spacing:0.05em; }
+    .nb-desc { font-size:0.8rem; color:var(--muted); line-height:1.5; margin-bottom:0.8rem; }
+    .nb-open { font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--cyan); }
 
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--muted);
-      max-width: 560px;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.6s forwards;
-    }
+    .findings-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
+    .finding-card { background:var(--card); border-radius:10px; padding:1.5rem; border:1px solid var(--border); border-left:3px solid var(--cyan); }
+    .finding-num { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--cyan); margin-bottom:0.3rem; }
+    .finding-title { font-weight:500; font-size:0.88rem; color:var(--white); margin-bottom:0.5rem; }
+    .finding-text { font-size:0.8rem; color:var(--muted); line-height:1.6; }
 
-    .hero-meta {
-      display: flex;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.8s forwards;
-    }
+    .charts-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:1.2rem; }
+    .chart-card { background:var(--card); border-radius:10px; overflow:hidden; border:1px solid var(--border); }
+    .chart-img { width:100%; display:block; background:#0d1f3c; }
+    .chart-label { padding:0.8rem 1rem; font-size:0.78rem; color:var(--muted); font-family:'DM Mono',monospace; }
 
-    .meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
-    .meta-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--cyan); text-transform: uppercase; }
-    .meta-value { font-size: 0.9rem; color: var(--white); font-weight: 500; }
+    .sat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:1rem; }
+    .sat-card { background:var(--card); border-radius:10px; padding:1.4rem; border:1px solid var(--border); }
+    .sat-name { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:var(--cyan); letter-spacing:0.05em; margin-bottom:0.3rem; }
+    .sat-role { font-size:0.78rem; color:var(--muted); line-height:1.5; }
 
-    /* ALERT BANNER */
-    .alert-banner {
-      background: rgba(230,57,70,0.12);
-      border-left: 3px solid var(--alert);
-      margin: 0 6vw 2rem;
-      padding: 1.2rem 1.5rem;
-      border-radius: 0 6px 6px 0;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      opacity: 0;
-      animation: fadeUp 0.8s 1s forwards;
-    }
+    .limits-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+    .limit-card { background:rgba(230,57,70,0.07); border:1px solid rgba(230,57,70,0.2); border-radius:10px; padding:1.3rem; }
+    .limit-title { font-weight:500; font-size:0.88rem; color:#f0b0b4; margin-bottom:0.5rem; }
+    .limit-text { font-size:0.8rem; color:var(--muted); line-height:1.6; }
 
-    .alert-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .alert-text { font-size: 0.88rem; line-height: 1.6; color: #f0b0b4; }
-    .alert-text strong { color: var(--alert); }
+    .ethics-block { background:var(--card); border-radius:12px; padding:2rem; border:1px solid var(--border); border-left:3px solid var(--flood); }
 
-    /* STATS STRIP */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1px;
-      background: rgba(255,255,255,0.06);
-      margin: 0 6vw 4rem;
-      border-radius: 10px;
-      overflow: hidden;
-    }
+    footer { border-top:1px solid var(--border); padding:2.5rem 6vw; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .footer-left { font-size:0.82rem; color:var(--muted); line-height:1.7; }
+    .footer-left strong { color:var(--white); font-weight:500; }
+    .footer-right { font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--muted); letter-spacing:0.1em; }
 
-    .stat {
-      background: var(--card);
-      padding: 1.8rem 1.5rem;
-      text-align: center;
-      transition: background 0.2s;
-    }
-
-    .stat:hover { background: var(--blue); }
-    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--cyan); line-height: 1; }
-    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.4; }
-
-    /* SECTION TITLE */
-    .section-header {
-      padding: 0 6vw;
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-    }
-
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      letter-spacing: 0.04em;
-      color: var(--white);
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: rgba(255,255,255,0.1);
-    }
-
-    /* MAP GRID */
-    .maps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5rem;
-      padding: 0 6vw 4rem;
-    }
-
-    .map-card {
-      background: var(--card);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-    }
-
-    .map-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--cyan);
-      box-shadow: 0 12px 40px rgba(0,194,224,0.15);
-    }
-
-    .map-card-header {
-      padding: 1.4rem 1.5rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .map-icon {
-      width: 40px; height: 40px;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-
-    .map-card-title {
-      font-weight: 500;
-      font-size: 0.95rem;
-      color: var(--white);
-      line-height: 1.3;
-      margin-bottom: 0.3rem;
-    }
-
-    .map-card-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      color: var(--cyan);
-      text-transform: uppercase;
-    }
-
-    .map-card-body {
-      padding: 1rem 1.5rem 1.4rem;
-    }
-
-    .map-card-desc {
-      font-size: 0.83rem;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    .map-card-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--cyan);
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.05em;
-    }
-
-    .map-card-btn::after {
-      content: '→';
-      transition: transform 0.2s;
-    }
-
-    .map-card:hover .map-card-btn::after { transform: translateX(4px); }
-
-    /* FEATURED MAP */
-    .featured-card {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    @media (max-width: 700px) {
-      .featured-card { grid-template-columns: 1fr; }
-    }
-
-    .featured-card .map-card-header {
-      flex-direction: column;
-      padding: 2rem;
-      border-bottom: none;
-      border-right: 1px solid rgba(255,255,255,0.06);
-      justify-content: center;
-    }
-
-    .featured-card .map-card-body {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .featured-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      color: var(--cyan);
-      text-transform: uppercase;
-      margin-bottom: 0.8rem;
-    }
-
-    .featured-card .map-card-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.8rem;
-    }
-
-    /* SATELLITES SECTION */
-    .satellites {
-      padding: 0 6vw 4rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-
-    .sat-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 1.4rem;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .sat-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      color: var(--cyan);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.3rem;
-    }
-
-    .sat-role {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 2.5rem 6vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-left { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
-    .footer-left strong { color: var(--white); font-weight: 500; }
-    .footer-right { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   </style>
 </head>
 <body>
 
-<!-- HERO -->
+<nav>
+  <div class="nav-logo">Valencia Flood 2024</div>
+  <a href="#overview">Overview</a>
+  <a href="#maps">Maps</a>
+  <a href="#neighborhoods">Neighborhoods</a>
+  <a href="#findings">Findings</a>
+  <a href="#limitations">Limitations</a>
+  <a href="#ethics">Ethics</a>
+</nav>
+
 <section class="hero">
   <div class="wave-bg">
     <svg viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg">
@@ -361,202 +137,243 @@
       <path d="M0,130 C200,80 400,180 600,130 C800,80 1000,180 1200,130 C1300,110 1380,140 1440,130 L1440,200 L0,200 Z" fill="#0077b6" opacity="0.6"/>
     </svg>
   </div>
-
-  <div class="hero-tag">🛰️ GISC 606 — Remote Sensing Final Project</div>
+  <div class="hero-tag">🛰️ Graduate Research Project — Remote Sensing</div>
   <h1>Valencia<br/><span>Flood</span><br/>Assessment</h1>
-  <p class="hero-sub">Satellite-based flood extent mapping and land cover analysis of the October 29, 2024 DANA event — Valencia, Spain.</p>
-
+  <p class="hero-sub">Satellite-based flood extent mapping and land cover damage analysis of the October 29, 2024 DANA event using Sentinel-1 SAR, Landsat 8, and Google Earth Engine.</p>
   <div class="hero-meta">
-    <div class="meta-item">
-      <span class="meta-label">Author</span>
-      <span class="meta-value">Fernando Pensamiento</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Degree</span>
-      <span class="meta-value">M.S. Geographic Information Science</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">University</span>
-      <span class="meta-value">California State University Long Beach</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Year</span>
-      <span class="meta-value">2026</span>
+    <div class="meta-item"><span class="meta-label">Author</span><span class="meta-value">Fernando Pensamiento</span></div>
+    <div class="meta-item"><span class="meta-label">Degree</span><span class="meta-value">M.S. Geographic Information Science</span></div>
+    <div class="meta-item"><span class="meta-label">University</span><span class="meta-value">California State University Long Beach</span></div>
+    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2026</span></div>
+  </div>
+</section>
+
+<div class="alert-banner">
+  <div class="alert-icon">⚠️</div>
+  <div class="alert-text">
+    <strong>Important — Satellite Limitations:</strong> The municipality of Paiporta — ground zero of this flood — shows relatively low detected flooding in the satellite maps. This does NOT reflect the true scale of the disaster. Paiporta suffered <strong>at least 60 confirmed deaths</strong>, the highest of any municipality. Dense buildings and paved surfaces interfere with radar signals, and much of the flash flood had already receded before the satellite passed. These maps are a scientific tool — always interpret them alongside official emergency records.
+  </div>
+</div>
+
+<section>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">229</div><div class="stat-label">Confirmed Deaths<br/>Valencia Province</div></div>
+    <div class="stat"><div class="stat-num">90K+</div><div class="stat-label">Residents<br/>Directly Affected</div></div>
+    <div class="stat"><div class="stat-num">8 hrs</div><div class="stat-label">Rainfall Equal to<br/>One Full Year</div></div>
+    <div class="stat"><div class="stat-num">74 km²</div><div class="stat-label">Cropland<br/>Flooded</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Satellites<br/>Used</div></div>
+    <div class="stat"><div class="stat-num">Oct 29</div><div class="stat-label">Flood Event<br/>Date, 2024</div></div>
+  </div>
+</section>
+
+<section id="overview">
+  <div class="section-header"><div class="section-title">Topic Overview</div><div class="section-line"></div></div>
+  <div class="prose">
+    <p>The October 29, 2024 flood of Valencia, Spain was one of the most catastrophic floods recorded in the region, intensified by climate change. Valencia is located in the Iberian Peninsula along the Mediterranean Sea and is one of Spain's seventeen autonomous communities. The storm produced a year's worth of rainfall in just 8 hours, causing massive flooding that killed 229 people and directly affected over 90,000 residents.</p>
+    <p>The Valencia DANA — <em>Depresion Aislada en Niveles Altos</em>, meaning upper-level isolated atmospheric depression — highlights the critical need for rapid and accurate flood damage assessment to support emergency response and recovery planning. One of the biggest challenges with mapping floods like this is that traditional satellites are blocked by cloud cover. <strong>Sentinel-1 SAR data solves this problem</strong> because it can acquire images in all weather conditions, day or night.</p>
+    <p>This project used Sentinel-1 SAR imagery within Google Earth Engine to map the flood extent across the Valencia region and overlay it with land cover data to identify which areas were most impacted.</p>
+  </div>
+  <br/><br/>
+  <div class="section-header"><div class="section-title">Research Questions</div><div class="section-line"></div></div>
+  <div class="rq-grid">
+    <div class="rq-card"><div class="rq-num">01</div><div class="rq-text">What was the <strong>spatial extent of flooding</strong> in the Valencia region following the October 2024 DANA event?</div></div>
+    <div class="rq-card"><div class="rq-num">02</div><div class="rq-text">Which <strong>land cover types</strong> — urban, agricultural, natural — were most severely affected by inundation?</div></div>
+    <div class="rq-card"><div class="rq-num">03</div><div class="rq-text">How different do the <strong>Sentinel-1 SAR images</strong> look before and after the flood, and can that difference create an accurate flood map?</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-header"><div class="section-title">Data Sources</div><div class="section-line"></div></div>
+  <div class="sat-grid">
+    <div class="sat-card"><div class="sat-name">Sentinel-1</div><div class="sat-role">SAR radar satellite. Sees through clouds day or night. Used for flood change detection between Oct 26 (pre) and Oct 31 (post-flood). 6-day repeat cycle — no image available on Oct 29.</div></div>
+    <div class="sat-card"><div class="sat-name">Landsat 8</div><div class="sat-role">Optical satellite by NASA/USGS. Used for NDWI water index and true color maps. Oct 30 image captured peak flood with only 1.7% cloud cover.</div></div>
+    <div class="sat-card"><div class="sat-name">Sentinel-2</div><div class="sat-role">High-resolution 10m optical satellite. Used as pre-flood visual reference for neighborhood comparisons. September 26, 2024 image at 0.2% cloud cover.</div></div>
+    <div class="sat-card"><div class="sat-name">WorldCover</div><div class="sat-role">ESA land cover map at 10m resolution. Classifies land into 7 types: tree cover, cropland, built-up, grassland, shrubland, bare, and water.</div></div>
+  </div>
+</section>
+
+<section id="maps">
+  <div class="section-header"><div class="section-title">Interactive Maps</div><div class="section-line"></div></div>
+  <div class="maps-grid">
+
+    <a class="map-card map-card-featured" href="map_neighborhood_overview.html" target="_blank">
+      <div class="map-card-header">
+        <div class="map-icon" style="background:rgba(0,194,224,0.15);font-size:2rem;">🏘️</div>
+        <div class="section-tag">Cell 24 — Featured</div>
+        <div class="map-card-title">Neighborhood Overview Map</div>
+        <div class="map-card-tag">Paiporta · Silla · Sollana · Sedaví</div>
+      </div>
+      <div class="map-card-body">
+        <div class="map-card-desc">Overview of all four most severely affected municipalities overlaid on the SAR and NDWI flood masks. Each neighborhood is outlined in a distinct color — red (Paiporta), orange (Silla), yellow (Sollana), pink (Sedaví). Toggle layers to compare SAR vs NDWI flood detection.</div>
+        <div class="map-card-btn">Open interactive map</div>
+      </div>
+    </a>
+
+    <a class="map-card" href="map1.html" target="_blank">
+      <div class="map-card-header">
+        <div class="map-icon" style="background:rgba(0,119,182,0.2);">📡</div>
+        <div><div class="map-card-title">Sentinel-1 SAR Imagery</div><div class="map-card-tag">Cell 4 · Radar · Pre & Post Flood</div></div>
+      </div>
+      <div class="map-card-body">
+        <div class="map-card-desc">VV-band radar backscatter comparison. Mean backscatter dropped from −13.53 dB (Oct 26) to −14.09 dB (Oct 31) — confirming widespread inundation across the region.</div>
+        <div class="map-card-btn">Open map</div>
+      </div>
+    </a>
+
+    <a class="map-card" href="map_worldcover.html" target="_blank">
+      <div class="map-card-header">
+        <div class="map-icon" style="background:rgba(34,139,34,0.2);">🗺️</div>
+        <div><div class="map-card-title">ESA WorldCover Land Cover</div><div class="map-card-tag">Cell 8 · 10m Resolution</div></div>
+      </div>
+      <div class="map-card-body">
+        <div class="map-card-desc">Land cover classification across Valencia. Tree cover leads at 5,457 km², followed by grassland (1,884 km²), shrubland (1,641 km²), and cropland (1,189 km²). Cropland is most critical to this analysis.</div>
+        <div class="map-card-btn">Open map</div>
+      </div>
+    </a>
+
+    <a class="map-card" href="map_landsat_ndwi.html" target="_blank">
+      <div class="map-card-header">
+        <div class="map-icon" style="background:rgba(0,194,224,0.15);">💧</div>
+        <div><div class="map-card-title">Landsat 8 NDWI</div><div class="map-card-tag">Cell 15 · Water Index · Oct 30</div></div>
+      </div>
+      <div class="map-card-body">
+        <div class="map-card-desc">Normalized Difference Water Index pre and post flood. Pre-flood mean: −0.456. Post-flood mean: −0.353 — a positive shift confirming water detection. NDWI only detects open water, not mud.</div>
+        <div class="map-card-btn">Open map</div>
+      </div>
+    </a>
+
+    <a class="map-card" href="map_flood_masks.html" target="_blank">
+      <div class="map-card-header">
+        <div class="map-icon" style="background:rgba(230,57,70,0.15);">🌊</div>
+        <div><div class="map-card-title">SAR + NDWI Flood Masks</div><div class="map-card-tag">Cell 20 · Dual Detection</div></div>
+      </div>
+      <div class="map-card-body">
+        <div class="map-card-desc">Both flood detection methods side by side — SAR backscatter change mask (blue) and NDWI threshold mask (cyan). Toggle layers to compare how each method captures the flood extent.</div>
+        <div class="map-card-btn">Open map</div>
+      </div>
+    </a>
+
+    <a class="map-card" href="map_flood_overlay.html" target="_blank">
+      <div class="map-card-header">
+        <div class="map-icon" style="background:rgba(255,165,0,0.15);">🔲</div>
+        <div><div class="map-card-title">Flood × Land Cover Overlay</div><div class="map-card-tag">Cell 21 · Impact Analysis</div></div>
+      </div>
+      <div class="map-card-body">
+        <div class="map-card-desc">Flood mask overlaid on WorldCover land classification. Answers Research Question 2. Cropland dominated at 74.17 km² flooded — nearly 66% of the total flooded area across Valencia.</div>
+        <div class="map-card-btn">Open map</div>
+      </div>
+    </a>
+
+    <a class="map-card" href="map_overview.html" target="_blank">
+      <div class="map-card-header">
+        <div class="map-icon" style="background:rgba(0,119,182,0.2);">🛰️</div>
+        <div><div class="map-card-title">Valencia Study Area</div><div class="map-card-tag">Cell 2 · Full Region Extent</div></div>
+      </div>
+      <div class="map-card-body">
+        <div class="map-card-desc">Full extent of the Valencia autonomous community loaded from Natural Earth administrative boundaries. Geographic context for the entire study area along the Mediterranean coast.</div>
+        <div class="map-card-btn">Open map</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section id="findings">
+  <div class="section-header"><div class="section-title">Key Findings</div><div class="section-line"></div></div>
+  <div class="prose" style="margin-bottom:2rem;">
+    <p>The final flood analysis illustrated that <strong>cropland took the biggest hit with 74.17 km² flooded</strong> — nearly 66% of the total flooded area across Valencia. That matters a lot since so many people depend on this land; losing fertile soil to a flood can set farmers back for years. Valencia produces two-thirds of Spain's orange harvest, making agricultural land loss particularly significant.</p>
+    <p>When looking at the Sentinel-1 VV band statistics, a clear drop in mean backscatter was visible between October 26 and October 31. The average dropped from −13.53 dB to −14.09 dB — getting much closer to the −15 dB water detection threshold. Water absorbs radar signals and doesn't reflect much back, so flooded areas look darker and have lower backscatter values. This answers Research Question 3: the before-and-after SAR images are clearly different, and that difference is large enough to build an accurate flood map.</p>
+  </div>
+  <div class="findings-grid" style="margin-bottom:2rem;">
+    <div class="finding-card"><div class="finding-num">74.17 km²</div><div class="finding-title">Cropland Flooded</div><div class="finding-text">~66% of total flooded area. Valencia produces two-thirds of Spain's orange harvest.</div></div>
+    <div class="finding-card"><div class="finding-num">8.70 km²</div><div class="finding-title">Grassland Flooded</div><div class="finding-text">Second most affected land cover type across the southern Valencia floodplain.</div></div>
+    <div class="finding-card"><div class="finding-num">7.39 km²</div><div class="finding-title">Tree Cover Flooded</div><div class="finding-text">Orange groves and tree cover severely inundated across the southern floodplain.</div></div>
+    <div class="finding-card"><div class="finding-num">0.90 km²</div><div class="finding-title">Built-up Flooded</div><div class="finding-text">Appears low due to radar interference in dense urban areas. Actual urban damage was far greater.</div></div>
+  </div>
+  <div class="section-tag">Cell 22 — SAR Flooded Area by Land Cover + Supporting Charts</div>
+  <div class="charts-grid">
+    <div class="chart-card"><img class="chart-img" src="flooded_area_by_landcover.png" alt="SAR Flooded Area by Land Cover"/><div class="chart-label">Cell 22 — SAR Flooded Area by Land Cover Class · Valencia October 2024</div></div>
+    <div class="chart-card"><img class="chart-img" src="sentinel1_stats.png" alt="Sentinel-1 Statistics"/><div class="chart-label">Cell 6 — Sentinel-1 VV Backscatter Statistics · Pre vs Post Flood</div></div>
+    <div class="chart-card"><img class="chart-img" src="worldcover_stats.png" alt="WorldCover Statistics"/><div class="chart-label">Cell 10 — ESA WorldCover Land Cover Distribution · Valencia Study Area</div></div>
+    <div class="chart-card"><img class="chart-img" src="ndwi_stats.png" alt="NDWI Statistics"/><div class="chart-label">Cell 16 — NDWI Summary Statistics · Pre vs Post Flood Water Index</div></div>
+  </div>
+</section>
+
+<section id="neighborhoods">
+  <div class="section-header"><div class="section-title">Neighborhood Analysis</div><div class="section-line"></div></div>
+  <div class="alert-banner" style="margin:0 0 2rem;">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-text"><strong>Before reading these maps:</strong> Paiporta — with the highest death toll — appears underrepresented because radar satellites struggle in dense urban areas, and Landsat imagery was captured October 30 after some water had already receded. Areas with less blue on the map did not necessarily experience less devastation.</div>
+  </div>
+  <div class="prose" style="margin-bottom:2rem;">
+    <p><strong>Silla was the most flooded neighborhood</strong> by satellite detection. Out of 26,557 pixels, 1,580 ended up underwater — almost 6% of the whole neighborhood. Its NDWI jumped from −0.422 before to −0.247 after, a positive change of 0.175. Sollana came in next with 0.390 km² flooded and a Flood Ratio Index of 0.0163. This aligns with Castro-Melgar et al. (2025), who found Silla and Sollana have the highest flood exposure around Valencia.</p>
+    <p><strong>Paiporta</strong> had low flood numbers despite more than 62 people dying there. The Barranco del Poyo ravine overflowed in just 15 minutes, flooding the town with a wall of water and mud at 2,300 cubic meters per second. Because NDWI only picks up open water — not mud — and the flash flood drained quickly before the October 30 Landsat pass, most of Paiporta's devastation didn't show up in the satellite data.</p>
+  </div>
+  <div class="section-tag" style="margin-bottom:1rem;">Cell 25 — Individual Neighborhood Flood Maps</div>
+  <div class="nb-grid" style="margin-bottom:2rem;">
+    <a class="nb-card" href="map_paiporta.html" target="_blank">
+      <div class="nb-name">Paiporta</div>
+      <div class="nb-stat">60+ CONFIRMED DEATHS · GROUND ZERO</div>
+      <div class="nb-desc">Deadliest single municipality. Barranco del Poyo overflowed in 15 minutes at 2,300 m³/s. Flash flood receded before satellite pass — urban flooding severely underrepresented in satellite data.</div>
+      <div class="nb-open">Open neighborhood map →</div>
+    </a>
+    <a class="nb-card" href="map_silla.html" target="_blank">
+      <div class="nb-name">Silla</div>
+      <div class="nb-stat">1.422 KM² FLOODED · HIGHEST FRI</div>
+      <div class="nb-desc">Most flooded neighborhood by satellite detection. 1,580 of 26,557 pixels underwater. NDWI changed from −0.422 to −0.247. Cropland loss of 1.732 km² — highest of any neighborhood.</div>
+      <div class="nb-open">Open neighborhood map →</div>
+    </a>
+    <a class="nb-card" href="map_sollana.html" target="_blank">
+      <div class="nb-name">Sollana</div>
+      <div class="nb-stat">0.390 KM² FLOODED · FRI: 0.0163</div>
+      <div class="nb-desc">Heavy agricultural damage. Rice fields and cropland severely affected (0.605 km²). Highest built-up area flooded of all four neighborhoods (0.363 km²).</div>
+      <div class="nb-open">Open neighborhood map →</div>
+    </a>
+    <a class="nb-card" href="map_sedavi.html" target="_blank">
+      <div class="nb-name">Sedaví</div>
+      <div class="nb-stat">DENSE URBAN · THIRD HIGHEST BUILT-UP</div>
+      <div class="nb-desc">Dense urban residential area. Third-highest built-up flooding (0.291 km²). Significantly affected by the DANA event with widespread residential damage.</div>
+      <div class="nb-open">Open neighborhood map →</div>
+    </a>
+  </div>
+  <div class="section-tag" style="margin-bottom:1rem;">Cells 27 & 28 — Neighborhood Comparison Charts</div>
+  <div class="charts-grid">
+    <div class="chart-card"><img class="chart-img" src="neighborhood_comparison.png" alt="Neighborhood Comparison"/><div class="chart-label">Cell 27 — Neighborhood Flood Comparison: SAR vs NDWI Detection by Municipality</div></div>
+    <div class="chart-card"><img class="chart-img" src="neighborhood_landcover.png" alt="Neighborhood Land Cover"/><div class="chart-label">Cell 28 — Land Cover Breakdown per Municipality: Flooded Area by Land Type</div></div>
+  </div>
+</section>
+
+<section id="limitations">
+  <div class="section-header"><div class="section-title">Limitations</div><div class="section-line"></div></div>
+  <div class="prose" style="margin-bottom:1.5rem;"><p>These limitations directly affect how the maps should be interpreted and are important to acknowledge wherever this analysis is shared.</p></div>
+  <div class="limits-grid">
+    <div class="limit-card"><div class="limit-title">SAR Threshold Not Validated</div><div class="limit-text">The −3 dB threshold for flood detection was based on reasoning and was not validated against ground truth data from Valencia.</div></div>
+    <div class="limit-card"><div class="limit-title">NDWI Misses Mud</div><div class="limit-text">NDWI only detects open water, not mud or sediment — a critical limitation for this event where many areas were buried in sediment rather than standing water.</div></div>
+    <div class="limit-card"><div class="limit-title">Satellite Timing Gap</div><div class="limit-text">No Sentinel-1 image was available on October 29. The 6-day repeat cycle produced the closest acquisitions on October 26 and 31. Some flooding had already begun to recede.</div></div>
+    <div class="limit-card"><div class="limit-title">Urban Radar Interference</div><div class="limit-text">Dense buildings and paved surfaces interfere with radar signals, causing flooded urban streets to appear dry to the satellite — Paiporta being the clearest example.</div></div>
+    <div class="limit-card"><div class="limit-title">Four Neighborhoods Only</div><div class="limit-text">The four municipalities were selected based on the literature. Many more people suffered beyond these four neighborhoods and beyond Valencia province.</div></div>
+    <div class="limit-card"><div class="limit-title">Incomplete Death Toll Data</div><div class="limit-text">Death toll data was incomplete for three of the four municipalities, limiting the ability to connect satellite data to actual human impact.</div></div>
+  </div>
+</section>
+
+<section id="ethics">
+  <div class="section-header"><div class="section-title">Ethics Addendum</div><div class="section-line"></div></div>
+  <div class="ethics-block">
+    <div class="section-tag" style="margin-bottom:1rem;">CARE Principles · Data Sovereignty · Community Impact</div>
+    <div class="prose">
+      <p>The data used in this project comes from ESA (Sentinel-1, Sentinel-2, WorldCover), NASA and USGS (Landsat 8), and Google Earth Engine. But the people who actually live in Paiporta, Silla, Sollana, and Sedaví are the ones most impacted by this analysis. They had zero input into which neighborhoods were selected, how damage was defined, or what might happen with this notebook in the future.</p>
+      <p>Carroll et al. (2019) say that communities connected to the land being studied should have a say in how data about their area is collected and used. The biggest risk in this analysis is Paiporta. If a policymaker or insurance company looks at this flood map without examining the damage details, they might move help or money somewhere else. <strong>That is a real danger.</strong></p>
+      <p>This project is FAIR — Findable, Accessible, Interoperable, and Reusable. However, Carroll et al. (2021) point out that FAIR and CARE are not the same thing. A dataset can be perfectly FAIR and still completely fail on CARE if the communities it describes had no say in how it was created or used.</p>
+      <p>The local government's response was widely criticized. People weren't warned early enough about the flood risk. The public outcry was so strong that <strong>President Carlos Mazón resigned in November 2025</strong>. This outcome is what the CARE principles warn against when affected communities lack authority to control how data and warnings about their own territories are shared — the consequences can be irreversible.</p>
     </div>
   </div>
 </section>
 
-<!-- ALERT -->
-<div class="alert-banner">
-  <div class="alert-icon">⚠️</div>
-  <div class="alert-text">
-    <strong>Important Notice on Satellite Limitations:</strong> The municipality of Paiporta — considered ground zero of this flood — shows relatively low detected flooding in satellite maps. This does NOT reflect the true scale of the disaster. Paiporta suffered <strong>56 confirmed deaths</strong>, the highest of any municipality. Dense buildings and paved surfaces interfere with radar signals. These maps are a scientific tool — always interpret them alongside official emergency records and ground-level reports.
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat">
-    <div class="stat-num">229</div>
-    <div class="stat-label">Confirmed Deaths<br/>Valencia Province</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">90K+</div>
-    <div class="stat-label">Residents<br/>Directly Affected</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">8hrs</div>
-    <div class="stat-label">Rainfall Equal to<br/>One Full Year</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">4</div>
-    <div class="stat-label">Satellites<br/>Used in Analysis</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">Oct 29</div>
-    <div class="stat-label">Flood Event<br/>Date, 2024</div>
-  </div>
-</div>
-
-<!-- INTERACTIVE MAPS -->
-<div class="section-header">
-  <div class="section-title">Interactive Maps</div>
-  <div class="section-line"></div>
-</div>
-
-<div class="maps-grid">
-
-  <!-- Featured -->
-  <a class="map-card featured-card" href="map_neighborhood_overview.html" target="_blank">
-    <div class="map-card-header">
-      <div class="map-icon" style="background:rgba(0,194,224,0.15); font-size:2rem;">🏘️</div>
-      <div class="featured-label">Featured Map</div>
-      <div class="map-card-title">Neighborhood Overview</div>
-      <div class="map-card-tag">Paiporta · Silla · Sollana · Sedaví</div>
-    </div>
-    <div class="map-card-body">
-      <div class="map-card-desc">An overview of all four most severely affected municipalities. Explore the geographic distribution of flood impact across the Valencia metropolitan area, overlaid with satellite imagery.</div>
-      <div class="map-card-btn">Open interactive map</div>
-    </div>
-  </a>
-
-  <a class="map-card" href="map1.html" target="_blank">
-    <div class="map-card-header">
-      <div class="map-icon" style="background:rgba(0,119,182,0.2);">📡</div>
-      <div>
-        <div class="map-card-title">Sentinel-1 SAR Imagery</div>
-        <div class="map-card-tag">Radar · All-Weather · Pre & Post Flood</div>
-      </div>
-    </div>
-    <div class="map-card-body">
-      <div class="map-card-desc">Radar backscatter comparison from Oct 26 (pre-flood) and Oct 31 (post-flood). SAR penetrates cloud cover, making it ideal for storm events.</div>
-      <div class="map-card-btn">Open map</div>
-    </div>
-  </a>
-
-  <a class="map-card" href="map_worldcover.html" target="_blank">
-    <div class="map-card-header">
-      <div class="map-icon" style="background:rgba(34,139,34,0.2);">🗺️</div>
-      <div>
-        <div class="map-card-title">ESA WorldCover Land Use</div>
-        <div class="map-card-tag">10m Resolution · 7 Land Classes</div>
-      </div>
-    </div>
-    <div class="map-card-body">
-      <div class="map-card-desc">ESA WorldCover 2021 land cover classification. Urban, agricultural, forest, and wetland areas identified at 10m resolution across the Valencia region.</div>
-      <div class="map-card-btn">Open map</div>
-    </div>
-  </a>
-
-  <a class="map-card" href="map_landsat_ndwi.html" target="_blank">
-    <div class="map-card-header">
-      <div class="map-icon" style="background:rgba(0,194,224,0.15);">💧</div>
-      <div>
-        <div class="map-card-title">Landsat 8 NDWI</div>
-        <div class="map-card-tag">Water Index · Oct 30 Post-Flood</div>
-      </div>
-    </div>
-    <div class="map-card-body">
-      <div class="map-card-desc">Normalized Difference Water Index calculated from Landsat 8 imagery captured October 30, 2024 — just 1 day after the flood peak, with only 1.7% cloud cover.</div>
-      <div class="map-card-btn">Open map</div>
-    </div>
-  </a>
-
-  <a class="map-card" href="map_flood_masks.html" target="_blank">
-    <div class="map-card-header">
-      <div class="map-icon" style="background:rgba(230,57,70,0.15);">🌊</div>
-      <div>
-        <div class="map-card-title">SAR + NDWI Flood Masks</div>
-        <div class="map-card-tag">Dual Detection · Change Analysis</div>
-      </div>
-    </div>
-    <div class="map-card-body">
-      <div class="map-card-desc">Both flood detection methods side by side — SAR backscatter change mask and NDWI threshold mask. Compare how each method captures flood extent.</div>
-      <div class="map-card-btn">Open map</div>
-    </div>
-  </a>
-
-  <a class="map-card" href="map_flood_overlay.html" target="_blank">
-    <div class="map-card-header">
-      <div class="map-icon" style="background:rgba(255,165,0,0.15);">🔲</div>
-      <div>
-        <div class="map-card-title">Flood × Land Cover Overlay</div>
-        <div class="map-card-tag">Impact Analysis · WorldCover</div>
-      </div>
-    </div>
-    <div class="map-card-body">
-      <div class="map-card-desc">Flood mask overlaid on WorldCover land classification. Identifies which land cover types — urban, agricultural, natural — were most severely inundated.</div>
-      <div class="map-card-btn">Open map</div>
-    </div>
-  </a>
-
-  <a class="map-card" href="map_overview.html" target="_blank">
-    <div class="map-card-header">
-      <div class="map-icon" style="background:rgba(0,119,182,0.2);">🛰️</div>
-      <div>
-        <div class="map-card-title">Study Area Overview</div>
-        <div class="map-card-tag">Valencia Region · Full Extent</div>
-      </div>
-    </div>
-    <div class="map-card-body">
-      <div class="map-card-desc">Full extent of the Valencia autonomous community study area, loaded from Natural Earth administrative boundaries with satellite base imagery.</div>
-      <div class="map-card-btn">Open map</div>
-    </div>
-  </a>
-
-</div>
-
-<!-- SATELLITES USED -->
-<div class="section-header">
-  <div class="section-title">Satellites Used</div>
-  <div class="section-line"></div>
-</div>
-
-<div class="satellites">
-  <div class="sat-card">
-    <div class="sat-name">Sentinel-1</div>
-    <div class="sat-role">SAR radar satellite. Sees through clouds day or night. Used for flood change detection between Oct 26 and Oct 31.</div>
-  </div>
-  <div class="sat-card">
-    <div class="sat-name">Landsat 8</div>
-    <div class="sat-role">Optical satellite by NASA/USGS. Used for NDWI water index and true color maps. Oct 30 image captured peak flood with 1.7% cloud cover.</div>
-  </div>
-  <div class="sat-card">
-    <div class="sat-name">Sentinel-2</div>
-    <div class="sat-role">High-resolution 10m optical satellite. Used as pre-flood visual reference for neighborhood comparisons. Sept 26 image at 0.2% cloud cover.</div>
-  </div>
-  <div class="sat-card">
-    <div class="sat-name">WorldCover</div>
-    <div class="sat-role">ESA land cover map at 10m resolution. Classifies land into 7 types: urban, agriculture, forest, wetland, and more.</div>
-  </div>
-</div>
-
-<!-- FOOTER -->
 <footer>
   <div class="footer-left">
     <strong>Fernando Pensamiento</strong> · Graduate Research Project<br/>
     M.S. Geographic Information Science · California State University Long Beach · 2026<br/>
-    Satellite data via Google Earth Engine
+    Satellite data via Google Earth Engine · ESA · NASA/USGS
   </div>
   <div class="footer-right">VALENCIA DANA FLOOD · OCT 2024</div>
 </footer>
